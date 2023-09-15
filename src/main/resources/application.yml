@@ -1,0 +1,15 @@
+spring:
+  application:
+#    this name should be the same that the prefix file that exists in the configurations, not the config server
+    name: jp-config
+  profiles:
+    active: prod
+  config:
+    import: optional:configserver:http://localhost:8888/
+server:
+  port: 8082
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
