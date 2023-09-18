@@ -25,6 +25,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+//	we must add this dependency in order to register the service in the eureka server
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'com.github.javafaker:javafaker:1.0.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

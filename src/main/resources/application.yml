@@ -5,6 +5,7 @@ spring:
   profiles:
     active: prod
   config:
+#    this is the configuration server url
     import: optional:configserver:http://localhost:8888/
 server:
   port: 8082
