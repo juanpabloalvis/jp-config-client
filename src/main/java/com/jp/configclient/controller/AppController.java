@@ -2,6 +2,7 @@ package com.jp.configclient.controller;
 
 import com.jp.configclient.config.Config;
 import com.jp.configclient.service.CustomLogService;
+import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,7 @@ public class AppController {
     }
 
     @GetMapping
+    @Timed("com.jp.client.get.app.name")
     public ResponseEntity<String> getAppName() {
         // esto sirve para crear una nueva métrica personalizada, esta métrica
         // solo aparecerá una vez se llame este método
