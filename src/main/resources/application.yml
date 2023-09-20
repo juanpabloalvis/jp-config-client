@@ -9,7 +9,15 @@ spring:
     import: optional:configserver:http://localhost:8888/
 server:
   port: 8082
+
+
+logging.pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
 management:
+  tracing:
+    sampling:
+      #      used for tracing
+      probability: 1.0
   endpoints:
     web:
       exposure:
