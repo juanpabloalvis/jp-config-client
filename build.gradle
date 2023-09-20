@@ -30,6 +30,9 @@ dependencies {
 	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
 	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
 
+	//observability
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+
 //	we must add this dependency in order to register the service in the eureka server
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'com.github.javafaker:javafaker:1.0.2'
