@@ -25,13 +25,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	// reporting tracing to zipkin
-	implementation 'io.micrometer:micrometer-observation'
-	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
 
-	//observability
-	implementation 'io.micrometer:micrometer-registry-prometheus'
+	// FOR NOW, WE DON WANT TO PUBLISH LOGs AND METRICS
+//	// reporting tracing to zipkin
+//	implementation 'io.micrometer:micrometer-observation'
+//	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+//	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+//
+//	//observability
+//	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 //	we must add this dependency in order to register the service in the eureka server
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'

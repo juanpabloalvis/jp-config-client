@@ -23,8 +23,8 @@ public class AppController {
     /**
      * aquí injectamos el bean
      */
-    @Autowired
-    private MeterRegistry meterRegistry;
+//    @Autowired
+//    private MeterRegistry meterRegistry;
     private final Config config;
 
     @Value("${server.port}")
@@ -41,9 +41,9 @@ public class AppController {
         // solo aparecerá una vez se llame este método
 //        meterRegistry.counter("jp.com.configclient.name").increment();
 //        ahora lo que hago aquí es que la métrica tenga un tag, segun el valor
-        int value = new Random().nextInt();
-        meterRegistry.counter("jp.com.configclient.metric.name", "level",
-                (value < 3 ? "jr" : "sr")).increment(value);
+//        int value = new Random().nextInt();
+//        meterRegistry.counter("jp.com.configclient.metric.name", "level",
+//                (value < 3 ? "jr" : "sr")).increment(value);
         customLogService.printLog();
         return ResponseEntity.ok(config.getApplicationName() + "My port is: " + serverPort);
     }
