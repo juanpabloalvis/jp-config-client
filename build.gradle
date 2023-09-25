@@ -50,3 +50,7 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootBuildImage {
+	environment = ["BP_JAVA_VERSION" : "17.*"]
+}
