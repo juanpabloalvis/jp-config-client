@@ -10,11 +10,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ import java.util.Optional;
 
 @RestController
 //@RequestMapping("/application-name")
-@Log
+@Log4j2
 public class AppController {
 
     @Autowired
@@ -70,9 +71,16 @@ public class AppController {
 
     @GetMapping("/translations")
     public ResponseEntity<String> getTranslations(@RequestParam("msg") String msg) {
-        log.info(String.format("Message Received: [%s]", msg));
+        log.info("Message Received: [{}]", msg);
         Optional<String> translation = translationService.getTranslation(msg);
         return translation.map(string -> ResponseEntity.ok("Response: " + string))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/translations")
+    public ResponseEntity<Void> deleteTranslations(@RequestParam("msg") String msg) {
+        log.info("Message Received: [{}]", msg);
+        translationService.getDeleteTranslation(msg);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

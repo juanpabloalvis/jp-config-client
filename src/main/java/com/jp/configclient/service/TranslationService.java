@@ -1,6 +1,9 @@
 package com.jp.configclient.service;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -9,6 +12,7 @@ import java.util.Optional;
 
 
 @Service
+@Log4j2
 public class TranslationService {
     Map<String, String> words = new HashMap<>();
 
@@ -19,9 +23,11 @@ public class TranslationService {
         words.put("Run Into", "Encontrarse");
     }
 
+    @Cacheable("translations")
     public Optional<String> getTranslation(String key) {
+        log.info("The word[{}] ot found in cache, searching inside method", key);
         try {
-            Thread.sleep(1000l);
+            Thread.sleep(3000l);
         } catch (InterruptedException e) {
         }
         for (String word : words.keySet()) {
@@ -30,5 +36,10 @@ public class TranslationService {
             }
         }
         return Optional.empty();
+    }
+
+    @CacheEvict("translations")
+    public void getDeleteTranslation(String msg) {
+        // Evict cache
     }
 }
