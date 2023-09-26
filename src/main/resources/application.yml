@@ -31,3 +31,7 @@ eureka:
   client:
     eureka-server-u-r-l-context: http://localhost:8761/eureka/
 
+springdoc:
+  packages-to-scan: com.jp.configclient.controller
+# also we can use a matcher
+#  paths-to-match:
