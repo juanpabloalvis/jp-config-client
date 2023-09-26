@@ -2,6 +2,7 @@ package com.jp.configclient.controller;
 
 import com.jp.configclient.config.Config;
 import com.jp.configclient.service.CustomLogService;
+import com.jp.configclient.service.TranslationService;
 import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -9,19 +10,26 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/application-name")
+//@RequestMapping("/application-name")
+@Log
 public class AppController {
 
     @Autowired
     private CustomLogService customLogService;
+    @Autowired
+    private TranslationService translationService;
 
     /**
      * aquí injectamos el bean
@@ -37,7 +45,7 @@ public class AppController {
         this.config = config;
     }
 
-    @GetMapping
+    @GetMapping("/application-name")
     @Timed("com.jp.client.get.app.name")
     @Operation(summary = "Get name of app and port name")
     @ApiResponses(value = {
@@ -57,5 +65,14 @@ public class AppController {
 //                (value < 3 ? "jr" : "sr")).increment(value);
         customLogService.printLog();
         return ResponseEntity.ok(config.getApplicationName() + "My port is: " + serverPort);
+    }
+
+
+    @GetMapping("/translations")
+    public ResponseEntity<String> getTranslations(@RequestParam("msg") String msg) {
+        log.info(String.format("Message Received: [%s]", msg));
+        Optional<String> translation = translationService.getTranslation(msg);
+        return translation.map(string -> ResponseEntity.ok("Response: " + string))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
